@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>启示录 全章 背诵默写</title>
+<title>启示录 1-2章 背诵默写</title>
 <style>
   * {
     margin: 0;
@@ -29,7 +29,8 @@
     border-bottom: 2px solid #e9ecef;
   }
 
-  .control-panel {
+  /* 顶部面板 */
+  .top-bar {
     background-color: #fff;
     padding: 15px;
     border-radius: 8px;
@@ -41,50 +42,85 @@
     align-items: center;
   }
 
-  .control-panel label {
+  .top-bar label {
     font-weight: 600;
     margin-right: 8px;
   }
 
-  .control-panel select {
+  .top-bar select {
     padding: 8px 12px;
     border: 1px solid #ced4da;
     border-radius: 4px;
     font-size: 16px;
   }
 
+  button { 
+    padding: 10px 20px; 
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+  }
+
+  #generateBtn { background-color: #28a745; color: white; }
+  #checkBtn    { background-color: #007bff; color: white; }
+  #resetBtn    { background-color: #6c757d; color: white; }
+
+  /* 正确率放在顶部 */
+  .score-box {
+    background: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+    display: none;
+  }
+
+  /* 内容区域 */
   .verse-container {
     background-color: #fff;
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-    max-height: 700px;
+    max-height: 750px;
     overflow-y: auto;
+  }
+
+  .blank-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 2px;
   }
 
   .blank {
     border: none;
     border-bottom: 2px solid #007bff;
-    margin: 0 4px;
-    padding: 2px 5px;
+    padding: 2px 6px;
     font-size: 1em;
     text-align: center;
-    background-color: transparent;
+    background: transparent;
     outline: none;
-    transition: all 0.2s;
-    min-width: 60px;
-  }
-
-  .blank:focus {
-    border-bottom-color: #28a745;
-    box-shadow: 0 1px 0 #28a745;
+    min-width: 70px;
   }
 
   .blank:disabled {
-    background-color: #e9ecef;
-    border-bottom-color: #6c757d;
+    background-color: #f1f3f5;
+    border-color: #adb5bd;
   }
+
+  .tip {
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  .tip.correct { color: #28a745; }
+  .tip.wrong   { color: #dc3545; }
 
   .verse { 
     margin-bottom: 12px;
@@ -97,80 +133,23 @@
     color: #007bff;
     margin-right: 8px;
     display: inline-block;
-    min-width: 50px;
-  }
-
-  .answer-list { 
-    margin-top: 20px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    list-style: none;
-    max-height: 400px;
-    overflow-y: auto;
-  }
-
-  .answer-list li {
-    margin-bottom: 6px;
-    padding: 6px 10px;
-    border-radius: 4px;
-  }
-
-  .answer-list li.correct { 
-    color: #28a745; 
-    background-color: #f0fff4;
-  }
-
-  .answer-list li.wrong { 
-    color: #dc3545; 
-    background-color: #fff5f5;
-  }
-
-  button { 
-    padding: 10px 20px; 
-    margin-right: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.2s;
-  }
-
-  #generateBtn {
-    background-color: #28a745;
-    color: white;
-  }
-  #checkBtn {
-    background-color: #007bff;
-    color: white;
-  }
-  #resetBtn {
-    background-color: #6c757d;
-    color: white;
+    min-width: 55px;
   }
 
   @media (max-width: 768px) {
-    body { padding: 10px; }
-    .control-panel { flex-direction: column; align-items: flex-start; }
-    button { width: 100%; margin-right: 0; margin-bottom: 8px; }
-    .verse-container { padding: 15px; }
+    .top-bar { flex-direction: column; align-items: stretch; }
+    button { width: 100%; }
   }
 </style>
 </head>
 <body>
 
-<h1>启示录 全章 背诵默写</h1>
+<h1>启示录 1–2章 背诵默写</h1>
 
-<div class="instructions">
-  <strong>使用说明：</strong>
-  1. 选择要默写的章节 → 2. 点击"生成默写内容" → 3. 在空白处填写内容 → 4. 点击"查看答案"核对 → 5. 可点击"重置"重新生成
-</div>
-
-<div class="control-panel">
+<div class="top-bar">
   <label for="chapter-select">选择章节：</label>
   <select id="chapter-select">
-    <option value="all">全部 1-22 章</option>
+    <option value="all">全卷（1-22章）</option>
     <option value="1">第 1 章</option>
     <option value="2">第 2 章</option>
     <option value="3">第 3 章</option>
@@ -194,13 +173,15 @@
     <option value="21">第 21 章</option>
     <option value="22">第 22 章</option>
   </select>
-  <button id="generateBtn" onclick="generateVerseBlanks()">生成默写</button>
-  <button id="checkBtn" onclick="checkAnswers()">查看答案</button>
-  <button id="resetBtn" onclick="resetBlanks()">重置</button>
+  <button id="generateBtn">生成默写</button>
+  <button id="checkBtn">立即批改</button>
+  <button id="resetBtn">清空重做</button>
 </div>
 
-<div id="verse-container" class="verse-container"></div>
-<ul id="answer-container" class="answer-list"></ul>
+<!-- 正确率放在这里（顶部） -->
+<div id="score-box" class="score-box"></div>
+
+<div class="verse-container" id="verse-container"></div>
 
 <script>
 // ===================== 启示录 1-22 章 完整默写题库 =====================
@@ -208,8 +189,8 @@ const bible = [
   {
     chapter: 1,
     verses: [
-      { verse: 1, text: "耶稣基督的启示，就是 神赐给祂，叫祂将必要快成的事指示祂的众仆人。祂就差遣使者晓谕祂的仆人约翰。", blanks: ["耶稣基督的启示", "神", "仆人", "约翰"] },
-      { verse: 2, text: "约翰便将 神的道，和耶稣基督的见证，凡自己所看见的，都证明出来。", blanks: ["神的道", "耶稣基督的见证"] },
+      { verse: 1, text: "耶稣基督的启示，就是 神赐给祂，叫祂将必要快成的事指示祂的众仆人。祂就差遣使者晓谕祂的仆人约翰。", blanks: ["耶稣基督", "启示", "神", "众仆人", "约翰"] },
+      { verse: 2, text: "约翰便将 神的道，和耶稣基督的见证，凡自己所看见的，都证明出来。", blanks: ["神的道", "耶稣基督的见证", "证明"] },
       { verse: 3, text: "念这书上预言的，和那些听见又遵守其中所记载的，都是有福的，因为日期近了。", blanks: ["书上预言", "遵守", "有福的"] },
       { verse: 4, text: "约翰写信给亚细亚的七个教会。但愿从那昔在今在以后永在的 神，和祂宝座前的七灵，", blanks: ["七个教会", "神", "七灵"] },
       { verse: 5, text: "并那诚实作见证的，从死里首先复活，为世上君王元首的耶稣基督，有恩惠平安归与你们。", blanks: ["诚实作见证", "首先复活", "耶稣基督", "恩惠平安"] },
@@ -233,7 +214,7 @@ const bible = [
   {
     chapter: 2,
     verses: [
-      { verse: 1, text: "你要写信给以弗所教会的使者，说，那右手拿着七星，在七个金灯台中间行走的，说，", blanks: ["以弗所", "七星", "金灯台"] },
+      { verse: 1, text: "你要写信给以弗所教会的使者，说，那右手拿着七星，在七个金灯台中间行走的，说，", blanks: ["以弗所", "右手", "七星", "金灯台"] },
       { verse: 2, text: "我知道你的行为，劳碌，忍耐，也知道你不能容忍恶人，你也曾试验那自称为使徒却不是使徒的，看出他们是假的来。", blanks: ["劳碌", "忍耐", "恶人", "使徒"] },
       { verse: 3, text: "你也能忍耐，曾为我的名劳苦，并不乏倦。", blanks: ["忍耐", "劳苦"] },
       { verse: 4, text: "然而有一件事，我要责备你，就是你把起初的爱心离弃了。", blanks: ["责备", "爱心"] },
@@ -695,84 +676,88 @@ const bible = [
     ]
   },
 ];
-const verseContainer = document.getElementById('verse-container');
-const answerContainer = document.getElementById('answer-container');
-let allBlanks = [];
 
+const verseContainer = document.getElementById('verse-container');
+const scoreBox = document.getElementById('score-box');
+const generateBtn = document.getElementById('generateBtn');
+const checkBtn = document.getElementById('checkBtn');
+const resetBtn = document.getElementById('resetBtn');
+
+// 生成填空
 function generateVerseBlanks() {
   verseContainer.innerHTML = '';
-  allBlanks = [];
-  const selectedChapter = document.getElementById('chapter-select').value;
-  let chaptersToShow = bible;
-  if (selectedChapter !== 'all') {
-    chaptersToShow = bible.filter(chap => chap.chapter === parseInt(selectedChapter));
+  scoreBox.style.display = 'none';
+
+  const selected = document.getElementById('chapter-select').value;
+  let list = bible;
+  if (selected !== 'all') {
+    list = bible.filter(c => c.chapter == selected);
   }
 
-  chaptersToShow.forEach(chap=>{
-    chap.verses.forEach(v=>{
+  list.forEach(chap => {
+    chap.verses.forEach(v => {
       let html = v.text;
-      const blanksToUse = v.blanks.filter(()=> Math.random() < 0.7);
-      blanksToUse.forEach(blank=>{
-        const inputWidth = Math.max(60, blank.length * 12);
-        html = html.replace(new RegExp(blank,"g"), `<input type="text" class="blank" data-answer="${blank}" style="width:${inputWidth}px">`);
-        allBlanks.push(blank);
+      const used = v.blanks.filter(() => Math.random() < 0.7);
+      used.forEach(ans => {
+        const w = Math.max(70, ans.length * 13);
+        html = html.replace(
+          new RegExp(ans.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
+          `<span class="blank-wrap">
+            <input type="text" class="blank" data-ans="${ans}" style="width:${w}px">
+            <span class="tip"></span>
+          </span>`
+        );
       });
       const p = document.createElement('p');
-      p.classList.add('verse');
-      p.innerHTML = `<span class="verse-number">${chap.chapter}:${v.verse}</span> ${html}`;
+      p.className = 'verse';
+      p.innerHTML = `<span class="verse-number">${chap.chapter}:${v.verse}</span>${html}`;
       verseContainer.appendChild(p);
     });
   });
-  answerContainer.innerHTML = '';
 }
 
-function checkAnswers(){
-  const inputs = document.querySelectorAll('input.blank');
-  answerContainer.innerHTML = '';
+// 批改
+function checkAnswers() {
+  const inputs = document.querySelectorAll('.blank');
   if (inputs.length === 0) {
-    const li = document.createElement('li');
-    li.textContent = "请先生成默写内容！";
-    answerContainer.appendChild(li);
+    alert('请先生成默写内容');
     return;
   }
 
-  let correctCount = 0;
-  inputs.forEach(input=>{
-    const userAnswer = input.value.trim();
-    const correctAnswer = input.getAttribute('data-answer');
-    const li = document.createElement('li');
-    
-    if(userAnswer === correctAnswer){
-      correctCount++;
-      li.classList.add('correct');
-      li.textContent = `✔️ 正确: ${correctAnswer}`;
+  let correct = 0;
+  let total = inputs.length;
+
+  inputs.forEach(i => {
+    const user = i.value.trim();
+    const ans = i.dataset.ans;
+    const tip = i.nextElementSibling;
+
+    i.disabled = true;
+    if (user === ans) {
+      correct++;
+      tip.textContent = '✔';
+      tip.className = 'tip correct';
     } else {
-      li.classList.add('wrong');
-      li.textContent = `❌ 错误: 你的答案 "${userAnswer || '未填写'}" → 正确答案 "${correctAnswer}"`;
+      tip.textContent = '✘ ' + ans;
+      tip.className = 'tip wrong';
     }
-    answerContainer.appendChild(li);
-    input.disabled = true;
   });
 
-  const statsLi = document.createElement('li');
-  statsLi.style.fontWeight = 'bold';
-  statsLi.style.marginTop = '15px';
-  statsLi.style.padding = '10px';
-  statsLi.style.backgroundColor = '#f8f9fa';
-  statsLi.textContent = `总计: ${correctCount}/${inputs.length} 正确 (正确率: ${((correctCount/inputs.length)*100).toFixed(1)}%)`;
-  answerContainer.appendChild(statsLi);
+  const rate = ((correct / total) * 100).toFixed(1);
+  scoreBox.style.display = 'block';
+  scoreBox.textContent = `正确：${correct} / ${total} 　正确率：${rate}%`;
 }
 
-function resetBlanks(){
+// 重置
+function resetBlanks() {
   generateVerseBlanks();
-  answerContainer.innerHTML = '';
 }
 
-window.onload = function() {
-  generateVerseBlanks();
-};
+generateBtn.onclick = generateVerseBlanks;
+checkBtn.onclick = checkAnswers;
+resetBtn.onclick = resetBlanks;
+
+window.onload = generateVerseBlanks;
 </script>
-
 </body>
-
 </html>
